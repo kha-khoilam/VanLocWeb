@@ -8,6 +8,15 @@ builder.Services.AddControllersWithViews();
 
 // Database Configuration
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+// Helper to convert postgres:// URI to Npgsql connection string
+if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres"))
+{
+    var uri = new Uri(connectionString);
+    var userInfo = uri.UserInfo.Split(':');
+    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
+}
+
 if (string.IsNullOrEmpty(connectionString))
 {
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -15,13 +24,8 @@ if (string.IsNullOrEmpty(connectionString))
 
 if (string.IsNullOrEmpty(connectionString))
 {
-    // Fallback to avoid "ConnectionString not initialized" error locally
     connectionString = "Host=localhost;Database=dummy;Username=dummy;Password=dummy";
-    Console.WriteLine("Using fallback connection string (localhost).");
-}
-else
-{
-    Console.WriteLine("Using database connection string from Environment/Config.");
+    Console.WriteLine("Warning: Using fallback connection string (localhost). Check DATABASE_URL.");
 }
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -104,4 +108,4 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
- 
+
