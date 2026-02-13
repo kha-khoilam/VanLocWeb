@@ -1,0 +1,187 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ - Hội đồng hương Vạn Lộc";
+}
+
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-cream py-24 lg:py-32">
+    <!-- Background Blobs -->
+    <div class="absolute top-0 right-0 -translate-y-12 translate-x-12 blur-3xl opacity-20 pointer-events-none">
+        <div class="w-96 h-96 bg-accent rounded-full"></div>
+    </div>
+    <div class="absolute bottom-0 left-0 translate-y-12 -translate-x-12 blur-3xl opacity-20 pointer-events-none">
+        <div class="w-80 h-80 bg-primary rounded-full"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <span
+                class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-[#cb997e] uppercase border border-[#cb997e] rounded-full">
+                Hội Đồng Hương Vạn Lộc
+            </span>
+            <h1 class="font-display text-5xl md:text-7xl font-bold text-charcoal mb-8 leading-tight">
+                Nơi kết nối tình thân <br />
+                <span class="text-primary italic">Hướng về nguồn cội</span>
+            </h1>
+            <p class="text-lg md:text-xl text-[#6b705c] mb-12 leading-relaxed max-w-2xl mx-auto">
+                Gắn kết những tấm lòng tâm huyết luôn hướng về xây dựng quê hương Vạn Lộc ngày càng giàu đẹp, văn minh.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a asp-action="About"
+                    class="bg-primary hover:bg-accent text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:-translate-y-1 no-underline">
+                    Tìm hiểu về Hội
+                </a>
+                <a asp-action="Join"
+                    class="bg-white hover:bg-cream text-charcoal border border-secondary px-8 py-4 rounded-xl font-bold transition-all no-underline">
+                    Tham gia ngay
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mx-auto px-4 py-20">
+    <!-- Statistics -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+        <div class="bg-white p-8 rounded-2xl border border-secondary/20 text-center hover:shadow-xl transition-shadow">
+            <div class="text-4xl font-display font-bold text-primary mb-2">@ViewBag.TotalMembers+</div>
+            <p class="text-xs uppercase tracking-widest text-secondary font-bold">Hội viên chính thức</p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl border border-secondary/20 text-center hover:shadow-xl transition-shadow">
+            <div class="text-4xl font-display font-bold text-accent mb-2">50+</div>
+            <p class="text-xs uppercase tracking-widest text-secondary font-bold">Hoạt động hàng năm</p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl border border-secondary/20 text-center hover:shadow-xl transition-shadow">
+            <div class="text-4xl font-display font-bold text-charcoal mb-2">@((ViewBag.TotalFunds /
+                1000000m).ToString("N0"))tr+</div>
+            <p class="text-xs uppercase tracking-widest text-secondary font-bold">Quỹ Hội</p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl border border-secondary/20 text-center hover:shadow-xl transition-shadow">
+            <div class="text-4xl font-display font-bold text-secondary mb-2">@ViewBag.TotalVisits</div>
+            <p class="text-xs uppercase tracking-widest text-secondary font-bold">Lượt truy cập</p>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="grid lg:grid-cols-2 gap-16 items-center mb-32">
+        <div class="order-2 lg:order-1">
+            <div class="relative">
+                <div class="absolute -top-4 -left-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl"></div>
+                <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1000&q=80"
+                    class="rounded-3xl shadow-2xl relative z-10 w-full object-cover aspect-[4/3]"
+                    alt="Vạn Lộc Community">
+                <div
+                    class="absolute -bottom-8 -right-8 bg-white p-6 rounded-2xl shadow-xl z-20 hidden md:block border border-secondary/10">
+                    <p class="text-sm font-bold text-primary mb-1">Gắn kết tình quê</p>
+                    <p class="text-xs text-secondary italic">Hơn 10 năm hoạt động và phát triển.</p>
+                </div>
+            </div>
+        </div>
+        <div class="order-1 lg:order-2">
+            <span class="text-sm font-bold text-accent uppercase tracking-widest mb-4 block">Về chúng tôi</span>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal mb-6 leading-tight">
+                Ngôi nhà chung của những con người xa quê
+            </h2>
+            <p class="text-[#6b705c] mb-8 leading-relaxed">
+                Chúng tôi thắt chặt tình đoàn kết, tương thân tương ái, là cầu nối giữa các thế hệ hội viên và luôn
+                hướng về xây dựng quê hương ngày càng giàu đẹp.
+            </p>
+            <ul class="space-y-4 mb-8">
+                <li class="flex items-center gap-3 text-charcoal">
+                    <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    Kết nối cộng đồng người con Vạn Lộc
+                </li>
+                <li class="flex items-center gap-3 text-charcoal">
+                    <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    Hỗ trợ hội viên trong cuộc sống và công việc
+                </li>
+                <li class="flex items-center gap-3 text-charcoal">
+                    <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    Thực hiện các công trình ý nghĩa tại quê nhà
+                </li>
+            </ul>
+            <a asp-action="About"
+                class="inline-flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all no-underline group">
+                Tìm hiểu thêm <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- News Section -->
+    <div class="mb-32">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <span class="text-sm font-bold text-accent uppercase tracking-widest mb-2 block">Cập nhật mới</span>
+                <h2 class="font-display text-4xl font-bold text-charcoal">Tin tức & Sự kiện</h2>
+            </div>
+            <a asp-action="News" class="hidden md:block text-primary font-bold hover:underline no-underline">
+                Xem tất cả chuyên mục
+            </a>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var news in (List<VanLocWeb.Models.NewsItem>)ViewBag.RecentNews)
+            {
+                <div
+                    class="group bg-white rounded-3xl overflow-hidden border border-secondary/10 hover:shadow-2xl transition-all">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="@(string.IsNullOrEmpty(news.ImageUrl) ? $"https://picsum.photos/seed/{news.Id + 30}/800/500" : news.ImageUrl)"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            alt="@news.Title">
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-xs font-bold text-accent uppercase">@news.Category</span>
+                            <span class="w-1 h-1 rounded-full bg-secondary"></span>
+                            <span class="text-xs text-secondary">@news.PublishDate.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <h3
+                            class="text-xl font-bold text-charcoal mb-4 group-hover:text-primary transition-colors line-clamp-2">
+                            @news.Title
+                        </h3>
+                        <p class="text-sm text-secondary mb-6 line-clamp-2">
+                            @news.Summary
+                        </p>
+                        <a asp-action="NewsDetail" asp-route-id="@news.Id"
+                            class="inline-flex items-center gap-2 text-sm font-bold text-charcoal no-underline hover:text-primary">
+                            Đọc chi tiết <i class="bi bi-plus-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Spotlight Section -->
+    <div class="bg-[#232d4b] rounded-[3rem] overflow-hidden lg:flex">
+        <div class="lg:w-1/2">
+            <img src="https://images.unsplash.com/photo-1544168190-79c17527004f?w=800&q=80"
+                class="w-full h-full object-cover min-h-[400px]" alt="Spotlight">
+        </div>
+        <div class="lg:w-1/2 p-12 lg:p-20">
+            <span class="text-sm font-bold text-accent uppercase tracking-widest mb-6 block">Gương sáng Vạn Lộc</span>
+            <h2 class="font-display text-4xl font-bold text-white mb-8 leading-tight">
+                Tâm huyết người con xa quê
+            </h2>
+            <div class="relative mb-12">
+                <i class="bi bi-quote absolute -top-8 -left-4 text-6xl text-white/10"></i>
+                <p class="text-xl text-cream italic leading-relaxed relative z-10">
+                    "Dù đi đâu, làm gì, trái tim tôi vẫn luôn hướng về mảnh đất Vạn Lộc anh hùng. Hội đồng hương là nơi
+                    tôi tìm thấy sự đồng cảm và động lực để cống hiến."
+                </p>
+            </div>
+            <div>
+                <h5 class="font-bold text-white text-lg">Ông Nguyễn Văn Thành</h5>
+                <p class="text-accent mb-0">Doanh nhân - Phó Chủ tịch Hội</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

@@ -1,0 +1,95 @@
+@model List<VanLocWeb.Models.EventItem>
+@{
+    ViewData["Title"] = "Sự kiện - Hội đồng hương Vạn Lộc";
+}
+
+<section class="bg-cream py-20 lg:py-32">
+    <div class="container mx-auto px-4 text-center">
+        <span class="text-sm font-bold text-accent uppercase tracking-widest mb-4 block">Nhìn lại & Đồng hành</span>
+        <h1 class="font-display text-4xl md:text-6xl font-bold text-charcoal mb-8">Sự kiện & Hoạt động</h1>
+        <p class="text-lg text-[#6b705c] max-w-2xl mx-auto">
+            Cùng tham dự và lưu giữ những khoảnh khắc ý nghĩa của cộng đồng người con Vạn Lộc.
+        </p>
+    </div>
+</section>
+
+<div class="container mx-auto px-4 py-20">
+    <div class="grid lg:grid-cols-3 gap-16">
+        <!-- Event List -->
+        <div class="lg:col-span-2 space-y-10">
+            @if (Model != null && Model.Count > 0)
+            {
+                @foreach (var ev in Model)
+                {
+                    <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-secondary/10 hover:shadow-2xl transition-all flex flex-col md:flex-row h-full">
+                        <div class="md:w-2/5 relative overflow-hidden">
+                            <img src="https://picsum.photos/seed/@(ev.Id + 100)/600/600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="@ev.Title">
+                            <div class="absolute top-6 left-6">
+                                <span class="px-4 py-1.5 bg-primary text-white rounded-full text-[10px] font-bold uppercase tracking-widest">Sắp diễn ra</span>
+                            </div>
+                        </div>
+                        <div class="md:w-3/5 p-10 md:p-12 flex flex-col">
+                            <div class="flex items-center gap-3 text-[10px] text-secondary font-bold uppercase tracking-widest mb-6">
+                                <i class="bi bi-geo-alt-fill text-accent"></i> @ev.Location
+                            </div>
+                            <h3 class="text-2xl font-bold text-charcoal mb-6 leading-tight group-hover:text-primary transition-colors">@ev.Title</h3>
+                            <p class="text-sm text-[#6b705c] mb-10 line-clamp-2 leading-relaxed">@ev.Description</p>
+                            <div class="mt-auto flex items-center justify-between border-t border-secondary/5 pt-8">
+                                <div class="text-xs font-bold text-primary flex items-center gap-2">
+                                    <i class="bi bi-calendar-event text-lg"></i> @ev.StartDate.ToString("dd/MM/yyyy HH:mm")
+                                </div>
+                                <a asp-action="EventDetail" asp-route-id="@ev.Id" class="text-sm font-bold text-charcoal hover:text-accent flex items-center gap-2 no-underline group/link">
+                                    Chi tiết <i class="bi bi-arrow-right group-hover/link:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center py-32 bg-cream/30 rounded-[3rem] border border-dashed border-secondary/20">
+                    <i class="bi bi-calendar-x text-5xl text-secondary mb-6 block"></i>
+                    <h5 class="text-xl font-bold text-charcoal mb-3">Hiện chưa có sự kiện mới</h5>
+                    <p class="text-secondary">Vui lòng quay lại sau để cập nhật thông tin mới nhất.</p>
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-10">
+            <div class="bg-white p-12 rounded-[3rem] border border-secondary/10 shadow-xl">
+                <h5 class="text-xl font-bold text-charcoal mb-10 border-b border-secondary/5 pb-6">Danh mục</h5>
+                <div class="space-y-6">
+                    <a href="#" class="flex items-center justify-between group no-underline">
+                        <div class="flex items-center gap-4 text-secondary group-hover:text-primary transition-colors font-bold text-sm">
+                            <div class="w-10 h-10 bg-primary/5 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <i class="bi bi-flag-fill"></i>
+                            </div>
+                            Kỷ niệm - Lễ hội
+                        </div>
+                        <span class="text-[10px] font-bold text-secondary bg-cream px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-all">12</span>
+                    </a>
+                    <a href="#" class="flex items-center justify-between group no-underline">
+                        <div class="flex items-center gap-4 text-secondary group-hover:text-accent transition-colors font-bold text-sm">
+                            <div class="w-10 h-10 bg-accent/5 rounded-xl flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all">
+                                <i class="bi bi-heart-fill"></i>
+                            </div>
+                            Thiện nguyện
+                        </div>
+                        <span class="text-[10px] font-bold text-secondary bg-cream px-3 py-1 rounded-full group-hover:bg-accent group-hover:text-white transition-all">08</span>
+                    </a>
+                    <a href="#" class="flex items-center justify-between group no-underline">
+                        <div class="flex items-center gap-4 text-secondary group-hover:text-primary transition-colors font-bold text-sm">
+                            <div class="w-10 h-10 bg-primary/5 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <i class="bi bi-mortarboard-fill"></i>
+                            </div>
+                            Khuyến học
+                        </div>
+                        <span class="text-[10px] font-bold text-secondary bg-cream px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-all">05</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

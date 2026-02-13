@@ -1,0 +1,181 @@
+@{
+    ViewData["Title"] = "Bảng điều khiển (Dashboard)";
+    Layout = "_AdminLayout";
+    var stats = ViewBag.Stats as VanLocWeb.Models.SiteStats;
+    var recentMembers = ViewBag.RecentMembers as List<VanLocWeb.Models.Member>;
+    var recentFinance = ViewBag.RecentFinance as List<VanLocWeb.Models.FinanceTransaction>;
+}
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+            <div class="d-flex align-items-center mb-3">
+                <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3">
+                    <i class="bi bi-people text-primary fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small">Hội viên</h6>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalMembers</h3>
+                </div>
+            </div>
+            <div class="small text-success"><i class="bi bi-arrow-up"></i> +@(stats?.TotalVisits > 0 ? "5" : "0")% tháng
+                này</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+            <div class="d-flex align-items-center mb-3">
+                <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3">
+                    <i class="bi bi-cash-coin text-success fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small">Quỹ hội</h6>
+                    <h4 class="fw-bold mb-0 text-success">@((ViewBag.TotalFunds / 1000000m).ToString("N1"))M</h4>
+                </div>
+            </div>
+            <div class="small text-muted">Dư nợ: @ViewBag.TotalFunds.ToString("N0")đ</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+            <div class="d-flex align-items-center mb-3">
+                <div class="bg-warning bg-opacity-10 p-3 rounded-3 me-3">
+                    <i class="bi bi-calendar-event text-warning fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small">Sự kiện</h6>
+                    <h3 class="fw-bold mb-0">3</h3>
+                </div>
+            </div>
+            <div class="small text-muted">Hoạt động trong tháng</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+            <div class="d-flex align-items-center mb-3">
+                <div class="bg-info bg-opacity-10 p-3 rounded-3 me-3">
+                    <i class="bi bi-eye text-info fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small">Lượt truy cập</h6>
+                    <h3 class="fw-bold mb-0">@stats?.TotalVisits</h3>
+                </div>
+            </div>
+            <div class="small text-primary">Dữ liệu thời gian thực</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div
+            class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-primary text-white overflow-hidden position-relative">
+            <div class="position-relative z-1">
+                <h5 class="fw-bold mb-3">Thao tác nhanh</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <a asp-action="CreateNews"
+                        class="btn btn-light rounded-pill px-4 py-2 font-bold text-primary shadow-sm"><i
+                            class="bi bi-file-earmark-plus me-2"></i>Đăng tin mới</a>
+                    <a asp-action="CreateEvent"
+                        class="btn btn-light rounded-pill px-4 py-2 font-bold text-primary shadow-sm"><i
+                            class="bi bi-calendar-plus me-2"></i>Tạo sự kiện</a>
+                    <a asp-action="CreateTransaction"
+                        class="btn btn-light rounded-pill px-4 py-2 font-bold text-primary shadow-sm"><i
+                            class="bi bi-plus-circle me-2"></i>Ghi chép thu chi</a>
+                    <a asp-action="Members"
+                        class="btn btn-light rounded-pill px-4 py-2 font-bold text-primary shadow-sm"><i
+                            class="bi bi-person-plus me-2"></i>Quản lý hội viên</a>
+                    <a asp-action="Messages"
+                        class="btn btn-light rounded-pill px-4 py-2 font-bold text-primary shadow-sm"><i
+                            class="bi bi-envelope me-2"></i>Hộp thư liên hệ</a>
+                    <a asp-action="ExportProfessionalReport"
+                        class="btn btn-accent rounded-pill px-4 py-2 font-bold text-white shadow-sm border-0"
+                        style="background-color: #cb997e;"><i class="bi bi-file-earmark-pdf me-2"></i>Xuất báo cáo tài
+                        chính</a>
+                </div>
+            </div>
+            <!-- Decorative circle -->
+            <div class="position-absolute end-0 bottom-0 translate-middle-y me-n5 mb-n5 opacity-10"
+                style="width: 300px; height: 300px; border-radius: 50%; background: white;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white py-3 border-0">
+                <h6 class="fw-bold mb-0">Hội viên mới ứng tuyển</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr class="small text-muted">
+                                <th class="ps-4">Hội viên</th>
+                                <th>Xóm</th>
+                                <th>Ngày đăng ký</th>
+                                <th class="text-end pe-4">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var m in recentMembers ?? new List<VanLocWeb.Models.Member>())
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="fw-bold">@m.FullName</div>
+                                        <div class="small text-muted">@m.Occupation</div>
+                                    </td>
+                                    <td>@m.Village</td>
+                                    <td class="small">@m.JoinDate.ToString("dd/MM/yyyy")</td>
+                                    <td class="text-end pe-4">
+                                        <button class="btn btn-sm btn-light rounded-pill px-3">Duyệt</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 text-center py-3">
+                <a asp-action="Members" class="small text-primary fw-bold text-decoration-none">Xem tất cả hội viên <i
+                        class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white py-3 border-0">
+                <h6 class="fw-bold mb-0">Giao dịch tài chính mới nhất</h6>
+            </div>
+            <div class="card-body">
+                @foreach (var f in recentFinance ?? new List<VanLocWeb.Models.FinanceTransaction>())
+                {
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-@(f.Type == "Income" ? "success" : "danger") bg-opacity-10 p-2 rounded-3 me-3">
+                            <i
+                                class="bi bi-@(f.Type == "Income" ? "arrow-up" : "arrow-down") fs-5 text-@(f.Type == "Income" ? "success" : "danger")"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold small">@f.Description</div>
+                            <div class="text-muted extra-small">@f.Date.ToString("dd/MM/yyyy")</div>
+                        </div>
+                        <div class="fw-bold text-@(f.Type == "Income" ? "success" : "danger")">
+                            @(f.Type == "Income" ? "+" : "-")@f.Amount.ToString("N0")đ
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="card-footer bg-white border-0 text-center py-3">
+                <a asp-action="Finance" class="small text-primary fw-bold text-decoration-none">Quản lý thu chi <i
+                        class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .extra-small {
+        font-size: 0.7rem;
+    }
+</style>

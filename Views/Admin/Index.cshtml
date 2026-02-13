@@ -1,0 +1,129 @@
+@model VanLocWeb.Models.DashboardViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Bảng điều khiển (Dashboard)";
+}
+
+<div class="row g-4">
+    <!-- Thống kê nhanh -->
+    <div class="col-md-3">
+        <div class="card admin-card bg-primary text-white">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Tổng hội viên</h6>
+                <h2 class="fw-bold mb-0">@Model.TotalMembers.ToString("N0")</h2>
+                <div class="mt-2 small text-white-50">+@Model.PendingMembers đăng ký mới</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card admin-card bg-success text-white">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Số dư Quỹ (Tổng)</h6>
+                <h2 class="fw-bold mb-0">@((Model.TotalFunds / 1000000m).ToString("N1"))M</h2>
+                <div class="mt-2 small text-white-50">Đã cập nhật hôm nay</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card admin-card bg-info text-white">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Lượt truy cập</h6>
+                <h2 class="fw-bold mb-0">@Model.TotalVisits.ToString("N0")</h2>
+                <div class="mt-2 small text-white-50">Theo dõi thời gian thực</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card admin-card bg-warning text-dark">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Tin tức mới</h6>
+                <h2 class="fw-bold mb-0">@Model.RecentNews.Count</h2>
+                <div class="mt-2 small text-dark-50">Cập nhật tin tức hội</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách đăng ký hội viên mới chờ duyệt -->
+    <div class="col-lg-8">
+        <div class="card admin-card">
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0">Hội viên mới ứng tuyển (Chờ duyệt)</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="table-light">
+                                <th class="ps-3">Họ và tên</th>
+                                <th>Xóm (Quê quán)</th>
+                                <th>Nghề nghiệp</th>
+                                <th>Ngày đăng ký</th>
+                                <th class="text-center">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ps-3 fw-bold">Trần Văn Cường</td>
+                                <td>Xóm 2</td>
+                                <td>Kỹ sư CNTT</td>
+                                <td>06/02/2025</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-success me-1">Duyệt</button>
+                                    <button class="btn btn-sm btn-danger">Từ chối</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-3 fw-bold">Lê Thị Mai</td>
+                                <td>Xóm 4</td>
+                                <td>Giáo viên</td>
+                                <td>05/02/2025</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-success me-1">Duyệt</button>
+                                    <button class="btn btn-sm btn-danger">Từ chối</button>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="ps-3 fw-bold">Nguyễn Hữu Đạt</td>
+                                <td>Xóm 1</td>
+                                <td>Doanh nhân</td>
+                                <td>04/02/2025</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-success me-1">Duyệt</button>
+                                    <button class="btn btn-sm btn-danger">Từ chối</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-white text-center py-3">
+                <a href="#" class="text-decoration-none small fw-bold">XEM TOÀN BỘ DANH SÁCH</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thông báo Admin -->
+    <div class="col-lg-4">
+        <div class="card admin-card h-100">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0">Lưu ý quản trị</h5>
+                <a asp-action="ExportReport" class="btn btn-sm btn-outline-primary"><i class="bi bi-download me-1"></i>
+                    Xuất báo cáo</a>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning border-0 small mb-3">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Báo cáo tài chính tháng 01/2025 chưa được khóa. Vui lòng kiểm tra lại các chứng từ.
+                </div>
+                <div class="alert alert-info border-0 small mb-3">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Có 5 bình luận mới cần kiểm duyệt trong bài viết "Hợp mặt đầu xuân".
+                </div>
+                <div class="alert alert-success border-0 small">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    Hệ thống đã tự động sao lưu dữ liệu lúc 00:00 sáng nay.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+@model VanLocWeb.Models.FinanceTransaction
+@{
+    ViewData["Title"] = "Thêm giao dịch thu chi";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <form asp-action="CreateTransaction" method="post">
+                <div class="mb-4 text-center">
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="Type" id="typeIncome" value="Income" checked
+                            required>
+                        <label class="btn btn-outline-success py-3 fw-bold" for="typeIncome"><i
+                                class="bi bi-plus-circle me-2"></i>KHOẢN THU (INCOME)</label>
+
+                        <input type="radio" class="btn-check" name="Type" id="typeExpense" value="Expense" required>
+                        <label class="btn btn-outline-danger py-3 fw-bold" for="typeExpense"><i
+                                class="bi bi-dash-circle me-2"></i>KHOẢN CHI (EXPENSE)</label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nội dung giao dịch</label>
+                    <input asp-for="Description" class="form-control form-control-lg"
+                        placeholder="Ví dụ: Đóng quỹ năm 2024, Chi hỗ trợ..." required>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Số tiền (VNĐ)</label>
+                        <div class="input-group">
+                            <input asp-for="Amount" type="number" class="form-control form-control-lg" placeholder="0"
+                                required>
+                            <span class="input-group-text">đ</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Ngày thực hiện</label>
+                        <input asp-for="Date" type="date" class="form-control form-control-lg" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Quyền hiển thị</label>
+                    <select asp-for="Visibility" class="form-select">
+                        <option value="Internal">Nội bộ (Chỉ Ban chấp hành/Hội viên)</option>
+                        <option value="Public">Công khai (Tất cả mọi người)</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Chứng từ đính kèm (Hình ảnh)</label>
+                    <input type="file" name="voucherFile" class="form-control" accept="image/*">
+                    <div class="form-text">Tải lên hình ảnh biên lai hoặc chứng từ xác nhận giao dịch.</div>
+                </div>
+
+                <div class="d-flex justify-content-between pt-3">
+                    <a asp-action="Finance" class="btn btn-light px-4 rounded-pill">Quay lại</a>
+                    <button type="submit" class="btn btn-primary px-5 rounded-pill fw-bold">LƯU GIAO DỊCH</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

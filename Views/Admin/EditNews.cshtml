@@ -1,0 +1,83 @@
+@model VanLocWeb.Models.NewsItem
+@{
+    ViewData["Title"] = "Chỉnh sửa bài viết";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-lg-9 mx-auto">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="fw-bold mb-4">Sửa bài viết: @Model.Title</h4>
+            <form asp-action="EditNews" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Tiêu đề bài viết</label>
+                    <input asp-for="Title" class="form-control form-control-lg" placeholder="Nhập tiêu đề hấp dẫn..." required>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Chuyên mục</label>
+                        <select asp-for="Category" class="form-select">
+                            <option value="Tin Hội">Tin Hội</option>
+                            <option value="Thông báo">Thông báo</option>
+                            <option value="Gương sáng">Gương sáng</option>
+                            <option value="Khuyến học">Khuyến học</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Quyền hiển thị</label>
+                        <select asp-for="Visibility" class="form-select">
+                            <option value="Public">Công khai (Tất cả mọi người)</option>
+                            <option value="Internal">Nội bộ (Chỉ hội viên)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Ngày đăng</label>
+                        <input asp-for="PublishDate" type="date" class="form-control" value="@Model.PublishDate.ToString("yyyy-MM-dd")">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Tóm tắt ngắn</label>
+                    <textarea asp-for="Summary" class="form-control" rows="2" placeholder="Tóm tắt bài viết..."></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nội dung chi tiết</label>
+                    <textarea asp-for="Content" class="form-control" rows="12" placeholder="Viết nội dung..." required></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Hình ảnh hiện tại</label>
+                    <div class="d-flex flex-wrap gap-3 mb-3">
+                        @foreach (var img in Model.Images)
+                        {
+                            <div class="position-relative">
+                                <img src="@img" class="rounded-3" style="width: 100px; height: 100px; object-cover" />
+                                <input type="hidden" name="existingImages" value="@img" />
+                                <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 rounded-circle" onclick="this.parentElement.remove()">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                    <label class="form-label fw-bold">Thêm ảnh mới (Chọn nhiều)</label>
+                    <input type="file" name="imageFiles" class="form-control" accept="image/*" multiple>
+                    <div class="form-text mt-2">Ảnh đầu tiên trong danh sách (kể cả ảnh cũ) sẽ làm ảnh đại diện.</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold small text-muted">Hoặc đường dẫn ảnh đại diện (URL)</label>
+                    <input asp-for="ImageUrl" class="form-control form-control-sm" placeholder="https://...">
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="News" class="btn btn-light px-4 rounded-pill">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-warning px-5 rounded-pill fw-bold">LƯU THAY ĐỔI</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

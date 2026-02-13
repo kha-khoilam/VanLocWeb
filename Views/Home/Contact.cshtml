@@ -1,0 +1,132 @@
+@{
+    ViewData["Title"] = "Liên hệ - Hội đồng hương Vạn Lộc";
+}
+
+<section class="bg-cream py-20 lg:py-32">
+    <div class="container mx-auto px-4 text-center">
+        <span class="text-sm font-bold text-accent uppercase tracking-widest mb-4 block">Chúng tôi lắng nghe bạn</span>
+        <h1 class="font-display text-4xl md:text-6xl font-bold text-charcoal mb-8">Kết nối & Phản hồi</h1>
+        <p class="text-lg text-[#6b705c] max-w-2xl mx-auto">
+            Mọi ý kiến đóng góp, thắc mắc từ hội viên và bà con quê hương luôn được trân trọng và phản hồi sớm nhất.
+        </p>
+    </div>
+</section>
+
+<div class="container mx-auto px-4 py-20">
+    <div class="grid lg:grid-cols-2 gap-16">
+        <!-- Contact Info -->
+        <div class="space-y-8">
+            <div class="grid gap-6">
+                <!-- Address -->
+                <div
+                    class="bg-white p-8 rounded-3xl border border-secondary/10 flex items-start gap-6 hover:shadow-xl transition-all">
+                    <div
+                        class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-2xl shrink-0">
+                        <i class="bi bi-geo-alt"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-xs font-bold text-secondary uppercase tracking-widest mb-2">Địa chỉ trụ sở</h6>
+                        <p class="text-charcoal font-bold leading-relaxed">Nhà văn hóa Xóm 3, Xã Vạn Lộc, Huyện Nam Đàn,
+                            Tỉnh Nghệ An</p>
+                    </div>
+                </div>
+                <!-- Hotline -->
+                <div
+                    class="bg-white p-8 rounded-3xl border border-secondary/10 flex items-start gap-6 hover:shadow-xl transition-all">
+                    <div
+                        class="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center text-accent text-2xl shrink-0">
+                        <i class="bi bi-telephone"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-xs font-bold text-secondary uppercase tracking-widest mb-2">Đường dây nóng</h6>
+                        <p class="text-charcoal font-bold leading-relaxed">0123 456 789 (Mr. Nam - Thư ký)</p>
+                    </div>
+                </div>
+                <!-- Email -->
+                <div
+                    class="bg-white p-8 rounded-3xl border border-secondary/10 flex items-start gap-6 hover:shadow-xl transition-all">
+                    <div
+                        class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary text-2xl shrink-0">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-xs font-bold text-secondary uppercase tracking-widest mb-2">Email hỗ trợ</h6>
+                        <p class="text-charcoal font-bold leading-relaxed">lienhe@vanloc-donghuong.vn</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image/Map Placeholder -->
+            <div
+                class="rounded-[2rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=600&q=80"
+                    class="w-full h-72 object-cover" alt="Vạn Lộc Location">
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="bg-white p-12 lg:p-16 rounded-[3rem] border border-secondary/10 shadow-2xl">
+            <h3 class="font-display text-3xl font-bold text-charcoal mb-10">Gửi tin nhắn trực tiếp</h3>
+            @if (TempData["Message"] != null)
+            {
+                <div
+                    class="alert alert-success rounded-2xl mb-10 p-6 border-0 shadow-sm flex items-center gap-4 bg-green-50 text-green-800">
+                    <i class="bi bi-check-circle-fill text-2xl"></i>
+                    <div>@TempData["Message"]</div>
+                </div>
+            }
+            <form asp-action="Contact" method="post" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-secondary uppercase tracking-widest px-1">Họ và tên
+                            *</label>
+                        <input type="text" name="FullName"
+                            class="w-full bg-cream/50 border-0 rounded-2xl px-6 py-4 text-charcoal focus:ring-2 focus:ring-primary placeholder-secondary"
+                            placeholder="Tên của bạn" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-secondary uppercase tracking-widest px-1">Số điện thoại
+                            *</label>
+                        <input type="tel" name="Phone"
+                            class="w-full bg-cream/50 border-0 rounded-2xl px-6 py-4 text-charcoal focus:ring-2 focus:ring-primary placeholder-secondary"
+                            placeholder="09xx..." required>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-secondary uppercase tracking-widest px-1">Email</label>
+                    <input type="email" name="Email"
+                        class="w-full bg-cream/50 border-0 rounded-2xl px-6 py-4 text-charcoal focus:ring-2 focus:ring-primary placeholder-secondary"
+                        placeholder="example@mail.com">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-secondary uppercase tracking-widest px-1">Tiêu đề phản
+                        hồi</label>
+                    <input type="text" name="Subject" id="contactSubject"
+                        class="w-full bg-cream/50 border-0 rounded-2xl px-6 py-4 text-charcoal focus:ring-2 focus:ring-primary placeholder-secondary"
+                        value="@Context.Request.Query["subject"]" placeholder="Cần hỗ trợ về...">
+                </div>
+                <script>
+                    window.onload = function () {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const subject = urlParams.get('subject');
+                        if (subject) {
+                            document.querySelector('textarea').placeholder = "Chào Ban chấp hành, tôi muốn kết nối với " + subject.split(': ')[1] + "...";
+                            document.querySelector('textarea').focus();
+                        }
+                    }
+                </script>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-secondary uppercase tracking-widest px-1">Nội dung chi tiết
+                        *</label>
+                    <textarea name="Content"
+                        class="w-full bg-cream/50 border-0 rounded-2xl px-6 py-4 text-charcoal focus:ring-2 focus:ring-primary placeholder-secondary"
+                        rows="5" placeholder="Viết nội dung tại đây..." required></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full bg-charcoal hover:bg-primary text-white font-bold py-5 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3">
+                    GỬI TIN NHẮN <i class="bi bi-send-fill"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hội Đồng Hương Vạn Lộc</title>
+    <meta name="description"
+        content="Website chính thức của Hội Đồng Hương Vạn Lộc - Nơi kết nối những người con xa quê, chia sẻ thông tin, sự kiện và hoạt động cộng đồng." />
+    <meta name="keywords" content="Vạn Lộc, Hội đồng hương, Nghệ An, Nam Đàn, kết nối đồng hương" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="@Context.Request.Path">
+    <meta property="og:title" content="@ViewData["Title"] - Hội Đồng Hương Vạn Lộc">
+    <meta property="og:description"
+        content="Website chính thức của Hội Đồng Hương Vạn Lộc - Nơi kết nối những người con xa quê.">
+    <meta property="og:image" content="~/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&family=Quicksand:wght@300..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6b705c',
+                        secondary: '#a5a58d',
+                        accent: '#cb997e',
+                        cream: '#f7ecd9',
+                        charcoal: '#232d4b',
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        display: ['Quicksand', 'sans-serif'],
+                    }
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/VanLocWeb.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    @{
+        string action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    }
+    <header>
+        <nav class="navbar fixed-top py-4 backdrop-blur-md bg-white/80 border-b border-secondary/10">
+            <div class="container flex justify-between items-center">
+                <!-- Brand -->
+                <a class="navbar-brand font-display font-bold text-2xl text-primary flex items-center no-underline"
+                    asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-geo-fill me-3 text-accent text-3xl"></i>
+                    <span>HỘI ĐỒNG HƯƠNG <span class="text-accent">VẠN LỘC</span></span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden lg:flex gap-6 items-center">
+                    <a asp-action="Index"
+                        class="text-[11px] font-bold @(action == "Index" ? "text-primary border-b-2 border-primary" : "text-charcoal/60") hover:text-charcoal no-underline transition-colors uppercase tracking-widest pb-1">Trang
+                        chủ</a>
+                    <a asp-action="About"
+                        class="text-[11px] font-bold @(action == "About" ? "text-primary border-b-2 border-primary" : "text-charcoal/60") hover:text-charcoal no-underline transition-colors uppercase tracking-widest pb-1">Giới
+                        thiệu</a>
+                    <a asp-action="News"
+                        class="text-[11px] font-bold @(action == "News" ? "text-primary border-b-2 border-primary" : "text-charcoal/60") hover:text-charcoal no-underline transition-colors uppercase tracking-widest pb-1">Tin
+                        tức</a>
+                    <a asp-action="Events"
+                        class="text-[11px] font-bold @(action == "Events" ? "text-primary border-b-2 border-primary" : "text-charcoal/60") hover:text-charcoal no-underline transition-colors uppercase tracking-widest pb-1">Sự
+                        kiện</a>
+                    <a asp-action="Members"
+                        class="text-[11px] font-bold @(action == "Members" ? "text-primary border-b-2 border-primary" : "text-charcoal/60") hover:text-charcoal no-underline transition-colors uppercase tracking-widest pb-1">Hội
+                        viên</a>
+                    <a asp-action="Finance"
+                        class="text-[11px] font-bold @(action == "Finance" ? "text-primary border-b-2 border-primary" : "text-charcoal/60") hover:text-charcoal no-underline transition-colors uppercase tracking-widest pb-1">Tài
+                        chính</a>
+                    <a asp-action="Contact"
+                        class="text-[11px] font-bold @(action == "Contact" ? "text-primary border-b-2 border-primary" : "text-charcoal/60") hover:text-charcoal no-underline transition-colors uppercase tracking-widest pb-1">Liên
+                        hệ</a>
+                    <a asp-action="Join"
+                        class="px-4 py-2 bg-accent/10 text-accent rounded-full text-[10px] font-bold uppercase tracking-widest no-underline hover:bg-accent hover:text-white transition-all">Gia
+                        nhập</a>
+                </div>
+
+                <!-- Hamburger Button -->
+                <button class="hamburger-btn focus:outline-none" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#navDrawer" aria-controls="navDrawer">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Off-canvas Navigation Drawer -->
+        <div class="offcanvas offcanvas-end offcanvas-vanloc border-0" tabindex="-1" id="navDrawer"
+            aria-labelledby="navDrawerLabel">
+            <div class="offcanvas-header p-8 lg:p-12">
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-8 lg:p-12 flex flex-col justify-between">
+                <div>
+                    <h5 class="text-xs font-bold uppercase tracking-[0.3em] text-accent mb-12" id="navDrawerLabel">Điều
+                        hướng</h5>
+                    <nav class="flex flex-col gap-4">
+                        <a asp-action="Index" class="drawer-link @(action == "Index" ? "active" : "")">Trang chủ</a>
+                        <a asp-action="About" class="drawer-link @(action == "About" ? "active" : "")">Giới thiệu về
+                            Hội</a>
+                        <a asp-action="News"
+                            class="drawer-link @(action == "News" || action == "NewsDetail" ? "active" : "")">Tin tức &
+                            Sự kiện</a>
+                        <a asp-action="Events"
+                            class="drawer-link @(action == "Events" || action == "EventDetail" ? "active" : "")">Hoạt
+                            động cộng đồng</a>
+                        <a asp-action="Members" class="drawer-link @(action == "Members" ? "active" : "")">Danh bạ hội
+                            viên</a>
+                        <a asp-action="Finance" class="drawer-link @(action == "Finance" ? "active" : "")">Tài chính
+                            công khai</a>
+                        <a asp-action="Contact" class="drawer-link @(action == "Contact" ? "active" : "")">Liên hệ công
+                            tác</a>
+                        <a asp-action="Join"
+                            class="mt-8 inline-block bg-primary text-white text-center py-4 rounded-xl font-bold no-underline hover:bg-accent transition-all">
+                            Tham gia Hội
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Subtle Info at Bottom -->
+                <div class="pt-12 border-t border-secondary/10 text-xs text-secondary italic">
+                    <p class="mb-2">Gắn kết tình quê - Sẻ chia yêu thương</p>
+                    <p>&copy; 2026 Hội Đồng Hương Vạn Lộc</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div style="margin-top: 85px;"></div>
+
+    @if (action != "Index")
+    {
+        <div class="bg-light py-3 border-bottom mb-4">
+            <div class="container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index"
+                                class="text-decoration-none">Trang chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @(ViewData["Title"]?.ToString()?.Split('-')[0]?.Trim() ?? "Trang")</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    }
+
+    <div class="main-content">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer py-20 mt-32 bg-[#232d4b] text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 items-start">
+                <!-- Column 1: Intro -->
+                <div class="flex flex-col space-y-6 text-center md:text-left">
+                    <a class="font-display font-bold text-2xl text-white flex items-center justify-center md:justify-start no-underline"
+                        asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-geo-fill me-3 text-accent text-3xl"></i>
+                        <span>HỘI ĐỒNG HƯƠNG <span class="text-accent">VẠN LỘC</span></span>
+                    </a>
+                    <p class="text-sm text-cream/70 leading-relaxed max-w-xs">
+                        Gắn kết tình quê, sẻ chia yêu thương giữa những người con Vạn Lộc xa quê hương trên mọi miền Tổ
+                        Quốc.
+                    </p>
+                    <div class="flex gap-4 justify-center md:justify-start">
+                        <a href="#"
+                            class="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/10 hover:bg-primary transition-all text-white border border-white/10 hover:border-transparent">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#"
+                            class="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/10 hover:bg-[#e63946] transition-all text-white border border-white/10 hover:border-transparent">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Links -->
+                <div class="flex flex-col text-center md:text-left">
+                    <h6 class="font-display font-bold mb-8 text-white uppercase tracking-widest text-xs">Liên kết nhanh
+                    </h6>
+                    <ul class="flex flex-col space-y-4 m-0 p-0 list-none">
+                        <li><a asp-action="Index"
+                                class="text-sm text-cream/60 hover:text-white transition-colors no-underline block">Trang
+                                chủ</a></li>
+                        <li><a asp-action="About"
+                                class="text-sm text-cream/60 hover:text-white transition-colors no-underline block">Giới
+                                thiệu</a></li>
+                        <li><a asp-action="Members"
+                                class="text-sm text-cream/60 hover:text-white transition-colors no-underline block">Mạng
+                                lưới hội viên</a></li>
+                        <li><a asp-action="Finance"
+                                class="text-sm text-cream/60 hover:text-white transition-colors no-underline block">Tài
+                                chính công khai</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact -->
+                <div class="flex flex-col text-center md:text-left">
+                    <h6 class="font-display font-bold mb-8 text-white uppercase tracking-widest text-xs">Thông tin văn
+                        phòng</h6>
+                    <ul class="flex flex-col space-y-6 m-0 p-0 list-none">
+                        <li class="flex flex-col md:flex-row items-center md:items-start text-sm text-cream/70">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent mb-3 md:mb-0 md:me-4 shrink-0">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <span class="leading-relaxed">Xã Vạn Lộc, huyện Nam Đàn, tỉnh Nghệ An</span>
+                        </li>
+                        <li class="flex flex-col md:flex-row items-center md:items-start text-sm text-cream/70">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent mb-3 md:mb-0 md:me-4 shrink-0">
+                                <i class="bi bi-telephone-fill"></i>
+                            </div>
+                            <span>Hotline: 0123 456 789</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Newsletter -->
+                <div class="flex flex-col space-y-8">
+                    <h6 class="font-display font-bold text-white uppercase tracking-widest text-xs">Bản tin điện tử</h6>
+                    <p class="text-sm text-cream/70 leading-relaxed">Đăng ký để nhận những thông báo mới nhất từ Hội
+                        đồng hương.</p>
+                    <div
+                        class="flex p-1 bg-white/10 border border-white/10 rounded-2xl focus-within:border-accent/40 transition-colors">
+                        <input type="email"
+                            class="bg-transparent border-0 px-4 py-3 text-white text-sm focus:ring-0 w-full placeholder-white/20"
+                            placeholder="Địa chỉ email...">
+                        <button
+                            class="bg-primary hover:bg-accent px-6 py-3 rounded-xl text-white text-sm font-bold transition-all shrink-0">
+                            Gửi
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-20 pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+                <span class="text-[10px] text-cream/30 uppercase tracking-[0.2em]">&copy; 2026 Hội Đồng Hương Vạn Lộc.
+                    Bảo lưu mọi quyền.</span>
+                <div class="flex gap-8 items-center">
+                    <a asp-controller="Home" asp-action="Privacy"
+                        class="text-[10px] text-cream/30 hover:text-accent transition-colors no-underline uppercase tracking-widest">Bảo
+                        mật</a>
+                    <a asp-controller="Home" asp-action="Terms"
+                        class="text-[10px] text-cream/30 hover:text-accent transition-colors no-underline uppercase tracking-widest">Điều
+                        khoản</a>
+                    <div class="w-px h-4 bg-white/10 hidden md:block"></div>
+                    <a asp-controller="Admin" asp-action="Dashboard"
+                        class="flex items-center gap-2 group text-[10px] text-cream/20 hover:text-white transition-all no-underline uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-accent/40 group-hover:bg-accent"></span> Quản trị hệ thống
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <button id="scrollToTop" class="btn btn-primary rounded-circle shadow-lg position-fixed d-none"
+        style="bottom: 30px; right: 30px; width: 50px; height: 50px; z-index: 1000;">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        window.onscroll = function () {
+            var nav = document.querySelector('.navbar');
+            var btn = document.getElementById('scrollToTop');
+            if (window.pageYOffset > 50) {
+                nav.classList.add('shadow-sm', 'py-2');
+                nav.classList.remove('py-3');
+                btn.classList.remove('d-none');
+            } else {
+                nav.classList.add('py-3');
+                nav.classList.remove('shadow-sm', 'py-2');
+                btn.classList.add('d-none');
+            }
+        };
+        document.getElementById('scrollToTop').onclick = function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    </script>
+    <script>
+        // Sync Hamburger animation with Off-canvas state
+        var navDrawer = document.getElementById('navDrawer');
+        var hamburgerBtn = document.querySelector('.hamburger-btn');
+
+        navDrawer.addEventListener('show.bs.offcanvas', function () {
+            hamburgerBtn.classList.add('open');
+        });
+
+        navDrawer.addEventListener('hide.bs.offcanvas', function () {
+            hamburgerBtn.classList.remove('open');
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

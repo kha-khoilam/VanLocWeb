@@ -1,0 +1,129 @@
+@model List<VanLocWeb.Models.NewsItem>
+@{
+    ViewData["Title"] = "Tin tức - Hội đồng hương Vạn Lộc";
+    var category = ViewData["Category"] as string;
+    var search = ViewData["Search"] as string;
+    bool isInternal = Context.Request.Query.ContainsKey("internal") && Context.Request.Query["internal"] == "true";
+}
+
+<section class="bg-cream py-20">
+    <div class="container mx-auto px-4 text-center">
+        <span class="text-sm font-bold text-accent uppercase tracking-widest mb-4 block">Cập nhật mới</span>
+        <h1 class="font-display text-4xl md:text-6xl font-bold text-charcoal mb-8">Thông tin & Sự kiện</h1>
+        <p class="text-lg text-[#6b705c] max-w-2xl mx-auto">
+            Cập nhật những chuyển động mới nhất, các thông báo quan trọng và những câu chuyện ý nghĩa từ cộng đồng Vạn Lộc.
+        </p>
+    </div>
+</section>
+
+<div class="container mx-auto px-4 py-20">
+    <!-- Filter Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-16 px-4 py-8 bg-white rounded-3xl border border-secondary/10 shadow-sm">
+        <div class="flex flex-wrap gap-4">
+            <a asp-action="News" class="px-6 py-2 rounded-full font-bold text-sm transition-all @(string.IsNullOrEmpty(category) ? "bg-primary text-white" : "text-secondary hover:text-primary")">
+                Tất cả
+            </a>
+            <a asp-action="News" asp-route-category="Hoạt động hội" class="px-6 py-2 rounded-full font-bold text-sm transition-all @(category == "Hoạt động hội" ? "bg-primary text-white" : "text-secondary hover:text-primary")">
+                Hoạt động Hội
+            </a>
+            <a asp-action="News" asp-route-category="Tin quê hương" class="px-6 py-2 rounded-full font-bold text-sm transition-all @(category == "Tin quê hương" ? "bg-primary text-white" : "text-secondary hover:text-primary")">
+                Tin quê hương
+            </a>
+            <a asp-action="News" asp-route-category="Thông báo" class="px-6 py-2 rounded-full font-bold text-sm transition-all @(category == "Thông báo" ? "bg-primary text-white" : "text-secondary hover:text-primary")">
+                Thông báo
+            </a>
+        </div>
+        <div class="w-full md:w-96">
+            <form asp-action="News" method="get" class="relative">
+                <input type="text" name="search" class="w-full bg-cream/50 border-0 rounded-2xl px-6 py-3 text-sm focus:ring-2 focus:ring-primary placeholder-secondary" placeholder="Tìm bài viết..." value="@search">
+                <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary hover:text-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    @if (isInternal)
+    {
+        <div class="mb-12 p-6 bg-accent/5 rounded-3xl border border-accent/20 flex items-center gap-6">
+            <div class="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center text-white text-2xl shrink-0">
+                <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <div>
+                <h6 class="font-bold text-charcoal">Chế độ xem Nội bộ</h6>
+                <p class="text-sm text-secondary">Bạn đang xem các bài viết dành riêng cho thành viên Hội đồng quản trị và Hội viên chính thức. <a href="?internal=false" class="text-accent font-bold hover:underline">Thoát</a></p>
+            </div>
+        </div>
+    }
+
+    <!-- Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        @foreach (var item in Model)
+        {
+            <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-secondary/10 hover:shadow-2xl transition-all h-full flex flex-col">
+                <div class="aspect-[16/10] overflow-hidden relative">
+                    <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? $"https://picsum.photos/seed/{item.Id + 20}/800/500" : item.ImageUrl)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="@item.Title">
+                    <div class="absolute top-6 left-6">
+                        <span class="px-4 py-1.5 bg-white/90 backdrop-blur shadow-sm rounded-full text-[10px] font-bold text-accent uppercase tracking-widest">@item.Category</span>
+                    </div>
+                </div>
+                <div class="p-10 flex flex-col flex-1">
+                    <div class="flex items-center gap-3 text-[11px] text-secondary font-bold uppercase tracking-widest mb-6">
+                        <i class="bi bi-calendar3"></i> @item.PublishDate.ToString("dd/MM/yyyy")
+                        @if (item.Visibility == VanLocWeb.Models.AccessLevel.Internal)
+                        {
+                            <span class="text-accent ml-auto flex items-center gap-1.5"><i class="bi bi-lock-fill"></i> Nội bộ</span>
+                        }
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal mb-6 leading-tight group-hover:text-primary transition-colors">
+                        <a asp-action="NewsDetail" asp-route-id="@item.Id" class="no-underline text-inherit">@item.Title</a>
+                    </h3>
+                    <p class="text-sm text-[#6b705c] mb-10 line-clamp-3 leading-relaxed">@item.Summary</p>
+                    <a asp-action="NewsDetail" asp-route-id="@item.Id" class="mt-auto inline-flex items-center gap-2 text-sm font-bold text-charcoal no-underline hover:text-primary group/link">
+                        Xem chi tiết <i class="bi bi-arrow-right group-hover/link:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-32">
+            <div class="w-20 h-20 bg-cream rounded-full flex items-center justify-center text-secondary text-4xl mx-auto mb-8">
+                <i class="bi bi-journal-x"></i>
+            </div>
+            <h4 class="text-xl font-bold text-charcoal mb-4">Không tìm thấy bài viết nào</h4>
+            <p class="text-secondary mb-10">Thử tìm kiếm với từ khóa khác hoặc quay lại danh mục chính.</p>
+            <a asp-action="News" class="bg-primary hover:bg-accent text-white px-10 py-4 rounded-2xl font-bold transition-all no-underline">
+                Xem tất cả tin tức
+            </a>
+        </div>
+    }
+</div>
+
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
+<style>
+    .hover-primary:hover {
+        color: var(--primary-color) !important;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .bg-soft-primary {
+        background-color: rgba(0, 51, 102, 0.1);
+    }
+</style>

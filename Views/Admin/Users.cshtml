@@ -1,0 +1,63 @@
+@model List<VanLocWeb.Models.AdminUser>
+@{
+    ViewData["Title"] = "Quản lý Phân quyền";
+    Layout = "_AdminLayout";
+}
+
+<div class="row g-4">
+    <div class="col-lg-12">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-white py-4 px-5 border-0 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0">Danh sách tài khoản quản trị</h5>
+                <button class="btn btn-primary rounded-pill px-4"><i class="bi bi-plus-lg me-2"></i>Thêm Admin</button>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr class="small text-muted">
+                                <th class="ps-5">ID</th>
+                                <th>Họ tên</th>
+                                <th>Tên đăng nhập</th>
+                                <th>Vai trò (Quyền)</th>
+                                <th class="text-end pe-5">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td class="ps-5">#@user.Id</td>
+                                    <td>
+                                        <div class="fw-bold">@user.FullName</div>
+                                    </td>
+                                    <td><code class="text-primary bg-primary bg-opacity-10 px-2 py-1 rounded">@user.Username</code></td>
+                                    <td>
+                                        <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3">@user.Role</span>
+                                    </td>
+                                    <td class="text-end pe-5">
+                                        <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-light rounded-circle text-danger ms-1"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permission Guide -->
+    <div class="col-lg-12">
+        <div class="alert alert-info border-0 rounded-4 p-4 shadow-sm">
+            <h6 class="fw-bold"><i class="bi bi-info-circle-fill me-2"></i>Hướng dẫn Phân quyền:</h6>
+            <ul class="mb-0 small">
+                <li><strong>SuperAdmin:</strong> Có toàn quyền toàn hệ thống, bao gồm cả việc quản lý các tài khoản admin khác.</li>
+                <li><strong>ContentManager:</strong> Chuyên trách quản lý nội dung: Tin tức, Sự kiện, Media.</li>
+                <li><strong>MemberManager:</strong> Chuyên trách quản lý hồ sơ hội viên và duyệt đăng ký mới.</li>
+                <li><strong>FinanceManager:</strong> Quản lý các khoản thu chi và xuất báo cáo tài chính.</li>
+            </ul>
+        </div>
+    </div>
+</div>

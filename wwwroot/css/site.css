@@ -1,0 +1,160 @@
+:root {
+  --primary-color: #6b705c;
+  /* Olive Green */
+  --secondary-color: #a5a58d;
+  /* Muted Sage */
+  --accent-color: #cb997e;
+  /* Terracotta / Earthy Orange */
+  --text-dark: #232d4b;
+  /* Charcoal */
+  --text-muted: #6b705c;
+  --bg-light: #f7ecd9;
+  /* Paper / Cream */
+  --glass-bg: rgba(247, 236, 217, 0.85);
+  --shadow-sm: 0 2px 4px rgba(107, 112, 92, 0.1);
+  --shadow-md: 0 8px 30px rgba(107, 112, 92, 0.15);
+}
+
+.text-gold {
+  color: var(--accent-color) !important;
+}
+
+body {
+  font-family: 'Manrope', 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-light);
+  line-height: 1.6;
+}
+
+/* Professional Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Navbar Enhancements & Black Underline Effect */
+.navbar {
+  backdrop-filter: blur(10px);
+  background-color: var(--glass-bg) !important;
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0px;
+  left: 50%;
+  background-color: #000;
+  /* Black Underline */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 70%;
+}
+
+.nav-link.active {
+  color: #000 !important;
+  font-weight: 700;
+}
+
+/* Layout & Main Content */
+.main-content {
+  flex: 1 0 auto;
+}
+
+/* Premium Component Styling */
+.card {
+  border: none !important;
+  border-radius: 16px;
+  background: white;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 10px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #002244;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.3);
+}
+
+.btn-warning {
+  background-color: var(--secondary-color);
+  border: none;
+  color: #000;
+}
+
+.btn-warning:hover {
+  background-color: #bfa030;
+  color: #000;
+}
+
+/* Carousel Professional Styling */
+.carousel-item {
+  height: 600px;
+}
+
+.carousel-caption {
+  bottom: 20%;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  padding: 3rem !important;
+}
+
+/* Footer modern layout */
+footer {
+  background: #111 !important;
+  color: #aaa !important;
+}
+
+footer h5,
+footer h6 {
+  color: white !important;
+}
+
+footer .text-muted {
+  color: #888 !important;
+}

@@ -1,0 +1,13 @@
+[Bb]in/
+[Oo]bj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+out/
+appsettings.Development.json
+wwwroot/uploads/*
+!wwwroot/uploads/.gitkeep
+wwwroot/data/*.json

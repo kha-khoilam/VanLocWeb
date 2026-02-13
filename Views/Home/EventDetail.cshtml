@@ -1,0 +1,163 @@
+@model VanLocWeb.Models.EventItem
+@{
+    ViewData["Title"] = Model.Title + " - Hội đồng hương Vạn Lộc";
+}
+
+<section class="bg-cream py-20 lg:py-32">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <span
+                class="px-4 py-1.5 bg-accent text-white rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 inline-block">Sự
+                kiện sắp diễn ra</span>
+            <h1 class="font-display text-4xl md:text-6xl font-bold text-charcoal mb-12">@Model.Title</h1>
+
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-[2.5rem] overflow-hidden bg-white shadow-2xl border border-secondary/10">
+                <div class="p-10 text-center border-b md:border-b-0 md:border-r border-secondary/5">
+                    <i class="bi bi-calendar-check text-primary text-3xl mb-4 block"></i>
+                    <span class="text-[10px] font-bold text-secondary uppercase tracking-widest mb-1 block">Ngày tổ
+                        chức</span>
+                    <span class="text-charcoal font-bold">@Model.StartDate.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="p-10 text-center border-b md:border-b-0 md:border-r border-secondary/5">
+                    <i class="bi bi-clock text-primary text-3xl mb-4 block"></i>
+                    <span class="text-[10px] font-bold text-secondary uppercase tracking-widest mb-1 block">Thời
+                        gian</span>
+                    <span class="text-charcoal font-bold">@Model.StartDate.ToString("HH:mm") -
+                        @Model.EndDate.ToString("HH:mm")</span>
+                </div>
+                <div class="p-10 text-center">
+                    <i class="bi bi-geo-alt text-primary text-3xl mb-4 block"></i>
+                    <span class="text-[10px] font-bold text-secondary uppercase tracking-widest mb-1 block">Địa
+                        điểm</span>
+                    <span class="text-charcoal font-bold">@Model.Location</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mx-auto px-4 py-20">
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-3 gap-20">
+        <div class="lg:col-span-2 space-y-16">
+            <div class="prose prose-lg prose-stone max-w-none text-[#6b705c] leading-relaxed">
+                <p class="text-xl font-medium text-charcoal leading-relaxed">@Model.Description</p>
+                @if (Model.Images != null && Model.Images.Count > 1)
+                {
+                    <div class="grid grid-cols-2 gap-4 my-16">
+                        @foreach (var img in Model.Images)
+                        {
+                            <img src="@img"
+                                class="w-full aspect-[4/3] object-cover rounded-3xl shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+                                onclick="openLightbox('@img')" alt="@Model.Title">
+                        }
+                    </div>
+                }
+                else
+                {
+                    <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? $"https://picsum.photos/seed/{Model.Id + 200}/1200/600" : Model.ImageUrl)"
+                        class="w-full aspect-[2/1] object-cover rounded-[3rem] shadow-xl my-16" alt="@Model.Title">
+                }
+
+                <h4 class="text-2xl font-bold text-charcoal mb-8">Thông tin chương trình</h4>
+                <p>Sự kiện hứa hẹn mang lại không gian ấm cúng, đậm chất quê hương với nhiều hoạt động giao lưu đặc sắc.
+                    Ban tổ chức đã chuẩn bị kỹ lưỡng về mọi mặt để chào đón bà con đồng hương.</p>
+
+                <div class="space-y-4 my-10">
+                    <div class="flex items-start gap-4 p-6 bg-white rounded-2xl border border-secondary/10">
+                        <i class="bi bi-check2-circle text-primary text-xl mt-0.5"></i>
+                        <span class="text-sm font-bold text-charcoal">Giao lưu văn hóa nghệ thuật truyền thống.</span>
+                    </div>
+                    <div class="flex items-start gap-4 p-6 bg-white rounded-2xl border border-secondary/10">
+                        <i class="bi bi-check2-circle text-primary text-xl mt-0.5"></i>
+                        <span class="text-sm font-bold text-charcoal">Báo cáo hoạt động và phương hướng phát triển
+                            Hội.</span>
+                    </div>
+                    <div class="flex items-start gap-4 p-6 bg-white rounded-2xl border border-secondary/10">
+                        <i class="bi bi-check2-circle text-primary text-xl mt-0.5"></i>
+                        <span class="text-sm font-bold text-charcoal">Tiệc Giao lưu thân mật.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative">
+            <div class="sticky top-10">
+                <div class="bg-charcoal px-10 py-12 rounded-[3rem] text-white shadow-2xl overflow-hidden relative">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-accent/20 blur-[60px] rounded-full"></div>
+                    <div class="relative z-10">
+                        <h4 class="text-2xl font-bold text-cream mb-8">Đăng ký tham gia</h4>
+                        <form id="eventRegForm" class="space-y-6">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-cream uppercase tracking-widest opacity-60 px-1">Họ
+                                    và tên *</label>
+                                <input type="text"
+                                    class="w-full bg-white/10 border-0 rounded-2xl px-6 py-4 text-white focus:ring-2 focus:ring-accent placeholder-white/30"
+                                    placeholder="Họ và tên" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-cream uppercase tracking-widest opacity-60 px-1">Số
+                                    điện thoại *</label>
+                                <input type="tel"
+                                    class="w-full bg-white/10 border-0 rounded-2xl px-6 py-4 text-white focus:ring-2 focus:ring-accent placeholder-white/30"
+                                    placeholder="09xx..." required>
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-cream uppercase tracking-widest opacity-60 px-1">Số
+                                    người tham dự</label>
+                                <select
+                                    class="w-full bg-white/10 border-0 rounded-2xl px-6 py-4 text-white focus:ring-2 focus:ring-accent appearance-none">
+                                    <option value="1">Đi một mình (1)</option>
+                                    <option value="2">2 người</option>
+                                    <option value="3">3 người</option>
+                                    <option value="4">Cả gia đình</option>
+                                </select>
+                            </div>
+                            <button type="button" onclick="confirmReg()"
+                                class="w-full bg-accent hover:bg-white hover:text-charcoal text-white font-bold py-5 rounded-2xl transition-all shadow-xl">
+                                GỬI ĐĂNG KÝ NGAY
+                            </button>
+                            <p
+                                class="text-center text-[10px] font-bold text-cream uppercase tracking-widest opacity-40">
+                                Hạn đăng ký: Trước 10/02/2025</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox for Detail Images -->
+<div id="detailLightbox"
+    class="fixed inset-0 z-[10000] bg-charcoal/95 backdrop-blur-xl flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+    onclick="closeDetailLightbox()">
+    <img id="detailLightboxImg" src="" class="max-h-[85vh] max-w-[90vw] rounded-2xl shadow-2xl">
+</div>
+
+<script>
+    function openLightbox(src) {
+        document.getElementById('detailLightboxImg').src = src;
+        document.getElementById('detailLightbox').classList.remove('opacity-0', 'pointer-events-none');
+    }
+    function closeDetailLightbox() {
+        document.getElementById('detailLightbox').classList.add('opacity-0', 'pointer-events-none');
+    }
+</script>
+
+<script>
+    function confirmReg() {
+        alert("Cảm ơn bạn đã đăng ký tham gia sự kiện! Ban tổ chức sẽ liên hệ xác nhận với bạn sớm nhất.");
+        document.getElementById("eventRegForm").reset();
+    }
+</script>
+
+<script>
+    function confirmReg() {
+        alert("Cảm ơn bạn đã đăng ký tham gia sự kiện! Ban tổ chức sẽ liên hệ xác nhận với bạn sớm nhất.");
+        document.getElementById("eventRegForm").reset();
+    }
+</script>

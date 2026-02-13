@@ -1,0 +1,89 @@
+@model VanLocWeb.Models.EventItem
+@{
+    ViewData["Title"] = "Chỉnh sửa sự kiện";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-lg-9 mx-auto">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="fw-bold mb-4">Sửa sự kiện: @Model.Title</h4>
+            <form asp-action="EditEvent" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Tên sự kiện / Hoạt động</label>
+                    <input asp-for="Title" class="form-control form-control-lg"
+                        placeholder="Ví dụ: Đại hội đồng hương 2025..." required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Mô tả tóm tắt</label>
+                    <textarea asp-for="Description" class="form-control" rows="3"
+                        placeholder="Giới thiệu ngắn gọn..."></textarea>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Ngày & Giờ bắt đầu</label>
+                        <input asp-for="StartDate" type="datetime-local" class="form-control" required
+                            value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Ngày & Giờ kết thúc</label>
+                        <input asp-for="EndDate" type="datetime-local" class="form-control" required
+                            value="@Model.EndDate.ToString("yyyy-MM-ddTHH:mm")">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Địa điểm tổ chức</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-geo-alt"></i></span>
+                        <input asp-for="Location" class="form-control" placeholder="Tên nhà hàng, địa chỉ..." required>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Quyền hiển thị</label>
+                        <select asp-for="Visibility" class="form-select">
+                            <option value="Public">Công khai</option>
+                            <option value="Internal">Nội bộ hội viên</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Hình ảnh hiện tại</label>
+                        <div class="d-flex flex-wrap gap-2 mb-2">
+                            @foreach (var img in Model.Images)
+                            {
+                                <div class="position-relative">
+                                    <img src="@img" class="rounded-2"
+                                        style="width: 80px; height: 80px; object-fit: cover;" />
+                                    <input type="hidden" name="existingImages" value="@img" />
+                                    <button type="button"
+                                        class="btn btn-sm btn-danger position-absolute top-0 end-0 rounded-circle py-0 px-1"
+                                        onclick="this.parentElement.remove()">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                        <label class="form-label fw-bold small">Thêm ảnh mới (Chọn nhiều)</label>
+                        <input type="file" name="imageFiles" class="form-control" accept="image/*" multiple>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold small text-muted">Hoặc đường dẫn ảnh bìa (URL)</label>
+                    <input asp-for="ImageUrl" class="form-control form-control-sm" placeholder="https://...">
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Events" class="btn btn-light px-4 rounded-pill">Quay lại</a>
+                    <button type="submit" class="btn btn-warning px-5 rounded-pill fw-bold">LƯU THAY ĐỔI</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

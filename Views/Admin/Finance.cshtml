@@ -1,0 +1,116 @@
+@model List<VanLocWeb.Models.FinanceTransaction>
+@{
+    ViewData["Title"] = "Quản lý Tài chính";
+    Layout = "_AdminLayout";
+    decimal totalIncome = Model.Where(t => t.Type == "Income").Sum(t => t.Amount);
+    decimal totalExpense = Model.Where(t => t.Type == "Expense").Sum(t => t.Amount);
+}
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 card-success-light">
+            <h6 class="text-muted small text-uppercase fw-bold">Tổng Thu</h6>
+            <h3 class="fw-bold text-success mb-0">@totalIncome.ToString("N0")đ</h3>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+            <h6 class="text-muted small text-uppercase fw-bold mb-3">Xuất Báo Cáo PDF</h6>
+            <div class="d-flex gap-4">
+                <a asp-action="ExportProfessionalReport" class="btn-export-circle bg-primary" title="Báo cáo Tổng hợp">
+                    <i class="bi bi-file-earmark-pdf"></i>
+                </a>
+                <a asp-action="ExportProfessionalReport" class="btn-export-circle bg-accent" title="Báo cáo Chi tiết">
+                    <i class="bi bi-file-earmark-spreadsheet"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-end">
+        <div class="d-flex align-items-center justify-content-end h-100">
+             <a asp-action="CreateTransaction" class="btn btn-primary rounded-pill px-4 py-3 fw-bold shadow-sm">
+                <i class="bi bi-plus-circle me-2"></i>Thêm giao dịch
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-export-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .btn-export-circle:hover {
+        transform: scale(1.1) translateY(-5px);
+        color: white;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .bg-accent { background-color: var(--accent-color); }
+</style>
+
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Ngày giao dịch</th>
+                        <th>Nội dung</th>
+                        <th>Phân loại</th>
+                        <th>Số tiền</th>
+                        <th class="text-end pe-4">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in Model.OrderByDescending(x => x.Date))
+                    {
+                        <tr>
+                            <td class="ps-4">@t.Date.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <div class="fw-bold">@t.Description</div>
+                                @if(t.Visibility == VanLocWeb.Models.AccessLevel.Internal) {
+                                    <span class="badge bg-soft-warning text-dark x-small">Nội bộ</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge @(t.Type == "Income" ? "bg-soft-success text-success" : "bg-soft-danger text-danger") px-3">
+                                    @(t.Type == "Income" ? "THU" : "CHI")
+                                </span>
+                            </td>
+                            <td class="fw-bold @(t.Type == "Income" ? "text-success" : "text-danger")">
+                                @(t.Type == "Income" ? "+" : "-")@t.Amount.ToString("N0")đ
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-light rounded-circle me-1" title="Xem chứng từ"><i class="bi bi-file-earmark-image"></i></button>
+                                    <form asp-action="DeleteTransaction" method="post" class="d-inline" onsubmit="return confirm('Xóa giao dịch này?')">
+                                        <input type="hidden" name="id" value="@t.Id" />
+                                        <button type="submit" class="btn btn-sm btn-light rounded-circle text-danger"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-success-light { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+    .card-danger-light { background: #ffebee; border-left: 5px solid #c62828; }
+    .bg-soft-success { background-color: rgba(46, 125, 50, 0.1); }
+    .bg-soft-danger { background-color: rgba(198, 40, 40, 0.1); }
+    .bg-soft-warning { background-color: rgba(212, 175, 55, 0.1); }
+    .x-small { font-size: 0.7rem; }
+</style>
