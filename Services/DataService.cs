@@ -61,12 +61,37 @@ namespace VanLocWeb.Services
         }
         public void SaveNews(List<NewsItem> news)
         {
-            // This method originally took a list and saved it. 
-            // In DB world, we usually work with items.
-            // But for minimal changes to controllers:
-            _context.NewsItems.ExecuteDelete(); // Optional: or smarter sync
+            _context.NewsItems.ExecuteDelete();
             _context.NewsItems.AddRange(news);
             _context.SaveChanges();
+        }
+
+        public void AddMember(Member member)
+        {
+            try
+            {
+                _context.Members.Add(member);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding member: " + ex.Message);
+                throw;
+            }
+        }
+
+        public void AddContactMessage(ContactMessage message)
+        {
+            try
+            {
+                _context.ContactMessages.Add(message);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding contact message: " + ex.Message);
+                throw;
+            }
         }
 
         public List<EventItem> GetAllEvents()

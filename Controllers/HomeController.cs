@@ -114,14 +114,11 @@ namespace VanLocWeb.Controllers
         [HttpPost]
         public IActionResult Join(Member member)
         {
-            var members = _dataService.GetAllMembers();
-            member.Id = members.Any() ? members.Max(m => m.Id) + 1 : 1;
             member.JoinDate = DateTime.Now;
             member.Status = "Pending";
             member.IsActive = false;
 
-            members.Add(member);
-            _dataService.SaveMembers(members);
+            _dataService.AddMember(member);
 
             TempData["Message"] = "Đăng ký của bạn đã được gửi thành công. Vui lòng chờ Ban chấp hành xét duyệt.";
             return RedirectToAction("Join");
@@ -152,13 +149,10 @@ namespace VanLocWeb.Controllers
         [HttpPost]
         public IActionResult Contact(ContactMessage message)
         {
-            var messages = _dataService.GetAllMessages();
-            message.Id = messages.Any() ? messages.Max(m => m.Id) + 1 : 1;
             message.SentDate = DateTime.Now;
             message.IsRead = false;
 
-            messages.Add(message);
-            _dataService.SaveMessages(messages);
+            _dataService.AddContactMessage(message);
 
             TempData["Message"] = "Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.";
             return RedirectToAction("Contact");
