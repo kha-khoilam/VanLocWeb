@@ -21,7 +21,7 @@ namespace VanLocWeb.Middleware
 
             if (isPageRequest)
             {
-                dataService.IncrementVisit();
+                dataService.AddSiteVisit(); // Fixed method name
             }
 
             await _next(context);

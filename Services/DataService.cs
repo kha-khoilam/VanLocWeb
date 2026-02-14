@@ -192,6 +192,11 @@ namespace VanLocWeb.Services
             return null;
         }
 
+        public void IncrementVisit()
+        {
+            AddSiteVisit();
+        }
+
         public void AddSiteVisit()
         {
             try
