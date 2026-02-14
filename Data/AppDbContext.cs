@@ -48,7 +48,7 @@ namespace VanLocWeb.Data
                 .HasConversion(dictConverter);
 
             // SiteStats only needs one row, but for simplicity we'll keep it as a table
-            modelBuilder.Entity<SiteStats>().HasKey(s => s.TotalVisits); // TotalVisits is not a great key, but SiteStats doesn't have an ID.
+            modelBuilder.Entity<SiteStats>().HasKey(s => s.Id);
             // Let's add an ID to SiteStats in AppModels.cs or just use a dummy key.
             // Fixed in AppModels.cs below.
         }
