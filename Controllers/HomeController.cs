@@ -8,11 +8,13 @@ namespace VanLocWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly VanLocWeb.Services.DataService _dataService;
+        private readonly VanLocWeb.Services.PdfService _pdfService;
 
-        public HomeController(ILogger<HomeController> logger, VanLocWeb.Services.DataService dataService)
+        public HomeController(ILogger<HomeController> logger, VanLocWeb.Services.DataService dataService, VanLocWeb.Services.PdfService pdfService)
         {
             _logger = logger;
             _dataService = dataService;
+            _pdfService = pdfService;
         }
 
         public IActionResult Index()
@@ -145,6 +147,13 @@ namespace VanLocWeb.Controllers
                 transactions = transactions.Where(t => t.Visibility == AccessLevel.Public).ToList();
             }
             return View(transactions);
+        }
+
+        public IActionResult ExportFinancePdf()
+        {
+            var transactions = _dataService.GetAllFinance().Where(t => t.Visibility == AccessLevel.Public).ToList();
+            var pdfBytes = _pdfService.GenerateFinanceReport(transactions, "BÁO CÁO TÀI CHÍNH HỘI ĐỒNG HƯƠNG VẠN LỘC");
+            return File(pdfBytes, "application/pdf", $"BaoCaoTaiChinh_{DateTime.Now:yyyyMMdd}.pdf");
         }
 
         public IActionResult Gallery(string year, string topic)

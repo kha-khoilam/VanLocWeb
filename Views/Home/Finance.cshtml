@@ -49,11 +49,13 @@
     <div class="bg-white rounded-[3rem] border border-secondary/10 shadow-2xl overflow-hidden">
         <div class="p-10 md:p-14 flex flex-col md:flex-row justify-between items-center gap-8 border-b border-secondary/5">
             <h5 class="text-2xl font-bold text-charcoal">Lịch sử giao dịch gần đây</h5>
-            <button class="flex items-center gap-2 px-8 py-4 bg-primary/5 text-primary rounded-2xl font-bold text-sm hover:bg-primary hover:text-white transition-all">
+            <a asp-action="ExportFinancePdf" class="flex items-center gap-2 px-8 py-4 bg-primary/5 text-primary rounded-2xl font-bold text-sm hover:bg-primary hover:text-white transition-all">
                 <i class="bi bi-download"></i> Tải báo cáo (PDF)
-            </button>
+            </a>
         </div>
-        <div class="overflow-x-auto">
+
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-left">
                 <thead>
                     <tr class="bg-cream/50 text-secondary text-[10px] font-bold uppercase tracking-[0.2em]">
@@ -86,6 +88,34 @@
                     }
                 </tbody>
             </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="md:hidden p-4 space-y-4">
+            @foreach (var item in Model)
+            {
+                <div class="bg-cream/20 rounded-2xl p-6 border border-secondary/10">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="font-bold text-charcoal mb-2">@item.Description</div>
+                            <div class="text-xs text-secondary">@item.Date.ToString("dd/MM/yyyy")</div>
+                        </div>
+                        <span class="px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest @(item.Type == "Income" ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent")">
+                            @(item.Type == "Income" ? "THU" : "CHI")
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        @if(item.Visibility == VanLocWeb.Models.AccessLevel.Internal) {
+                            <span class="px-3 py-1 bg-accent/10 text-accent text-[9px] font-bold rounded-full uppercase tracking-tighter">Nội bộ</span>
+                        } else {
+                            <span></span>
+                        }
+                        <div class="font-display font-bold text-lg @(item.Type == "Income" ? "text-primary" : "text-accent")">
+                            @(item.Type == "Income" ? "+" : "-")@item.Amount.ToString("N0") <span class="text-xs opacity-60">đ</span>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
