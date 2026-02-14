@@ -194,6 +194,7 @@ namespace VanLocWeb.Services
 
         public void IncrementVisit()
         {
+            // Wrapper for backward compatibility
             AddSiteVisit();
         }
 
