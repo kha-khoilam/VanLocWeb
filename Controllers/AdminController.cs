@@ -367,6 +367,42 @@ namespace VanLocWeb.Controllers
             return View(admins);
         }
 
+        [HttpGet]
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateUser(string username, string password, string fullName, AdminRole role)
+        {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin");
+                return View();
+            }
+
+            var admins = _dataService.GetAllAdmins();
+            if (admins.Any(u => u.Username == username))
+            {
+                ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
+                return View();
+            }
+
+            var newUser = new AdminUser
+            {
+                Id = admins.Any() ? admins.Max(u => u.Id) + 1 : 1,
+                Username = username,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+                FullName = fullName,
+                Role = role
+            };
+
+            admins.Add(newUser);
+            _dataService.SaveAdmins(admins);
+            return RedirectToAction("Users");
+        }
+
         public IActionResult Messages()
         {
             var messages = _dataService.GetAllMessages();

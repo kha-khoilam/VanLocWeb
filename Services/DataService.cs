@@ -141,6 +141,12 @@ namespace VanLocWeb.Services
             try { return _context.AdminUsers.ToList(); }
             catch { return new List<AdminUser>(); }
         }
+        public void SaveAdmins(List<AdminUser> admins)
+        {
+            _context.AdminUsers.ExecuteDelete();
+            _context.AdminUsers.AddRange(admins);
+            _context.SaveChanges();
+        }
 
         public List<EventRegistration> GetAllRegistrations()
         {
