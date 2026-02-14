@@ -114,7 +114,7 @@ namespace VanLocWeb.Controllers
         [HttpPost]
         public IActionResult Join(Member member)
         {
-            member.JoinDate = DateTime.Now;
+            member.JoinDate = DateTime.UtcNow; // Postgres requires UTC
             member.Status = "Pending";
             member.IsActive = false;
 
