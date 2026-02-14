@@ -27,7 +27,6 @@ namespace VanLocWeb.Controllers
 
             ViewBag.RecentNews = _dataService.GetAllNews().OrderByDescending(n => n.PublishDate).Take(3).ToList();
             ViewBag.RecentEvents = _dataService.GetAllEvents().OrderByDescending(e => e.StartDate).Take(2).ToList();
-
             return View();
         }
 
@@ -122,6 +121,20 @@ namespace VanLocWeb.Controllers
 
             TempData["Message"] = "Đăng ký của bạn đã được gửi thành công. Vui lòng chờ Ban chấp hành xét duyệt.";
             return RedirectToAction("Join");
+        }
+
+        [HttpGet]
+        public IActionResult SeedData()
+        {
+            try
+            {
+                _dataService.InitializeDatabase();
+                return Content("Database initialized successfully!");
+            }
+            catch (Exception ex)
+            {
+                return Content($"Error initializing database: {ex.Message} \n {ex.StackTrace}");
+            }
         }
 
         public IActionResult Finance(bool @internal = false)
