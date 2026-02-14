@@ -20,9 +20,9 @@
                     </div>
                     @if (Model.Visibility == VanLocWeb.Models.AccessLevel.Internal)
                     {
-                        <div class="ml-auto text-accent flex items-center gap-2 text-xs font-bold uppercase">
-                            <i class="bi bi-lock-fill"></i> Nội bộ
-                        </div>
+                            <div class="ml-auto text-accent flex items-center gap-2 text-xs font-bold uppercase">
+                                <i class="bi bi-lock-fill"></i> Nội bộ
+                            </div>
                     }
                 </div>
             </div>
@@ -34,19 +34,19 @@
     <div class="max-w-4xl mx-auto">
         @if (Model.Images != null && Model.Images.Count > 1)
         {
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
                 @foreach (var img in Model.Images)
                 {
-                    <img src="@img"
-                        class="w-full aspect-[4/3] object-cover rounded-[2rem] shadow-lg hover:scale-105 transition-transform duration-500 cursor-pointer"
-                        onclick="openLightbox('@img')" alt="@Model.Title">
+                            <img src="@img"
+                                class="w-full aspect-[4/3] object-cover rounded-[2rem] shadow-lg hover:scale-105 transition-transform duration-500 cursor-pointer"
+                                onclick="openLightbox('@img')" alt="@Model.Title">
                 }
-            </div>
+                </div>
         }
         else
         {
-            <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? $"https://picsum.photos/seed/{Model.Id + 30}/1200/600" : Model.ImageUrl)"
-                class="w-full aspect-[2/1] object-cover rounded-[3rem] shadow-2xl mb-20" alt="@Model.Title">
+                <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? $"https://picsum.photos/seed/{Model.Id + 30}/1200/600" : Model.ImageUrl)"
+                    class="w-full aspect-[2/1] object-cover rounded-[3rem] shadow-2xl mb-20" alt="@Model.Title">
         }
 
         <div class="bg-white p-10 md:p-20 rounded-[3rem] shadow-xl border border-secondary/5">
@@ -56,11 +56,11 @@
                     @Html.Raw(Model.Content.Replace("\n", "<p>").Replace("<p>", "</p><p class='mb-8'>"))
                     @if (string.IsNullOrEmpty(Model.Content))
                     {
-                        <p>Thông tin chi tiết về bài viết đang được Ban biên tập cập nhật. Quý độc giả vui lòng quay lại sau
-                            để theo dõi đầy đủ nội dung hoặc liên hệ trực tiếp với Ban chấp hành Hội để được giải đáp thắc
-                            mắc.</p>
-                        <p>Chúng tôi luôn nỗ lực mang đến những thông tin chính xác và kịp thời nhất cho bà con đồng hương
-                            xa quê.</p>
+                            <p>Thông tin chi tiết về bài viết đang được Ban biên tập cập nhật. Quý độc giả vui lòng quay lại sau
+                                để theo dõi đầy đủ nội dung hoặc liên hệ trực tiếp với Ban chấp hành Hội để được giải đáp thắc
+                                mắc.</p>
+                            <p>Chúng tôi luôn nỗ lực mang đến những thông tin chính xác và kịp thời nhất cho bà con đồng hương
+                                xa quê.</p>
                     }
                 </div>
             </div>
@@ -71,11 +71,17 @@
                 <div class="flex items-center gap-4">
                     <span class="text-xs font-bold text-secondary uppercase tracking-widest">Chia sẻ:</span>
                     <div class="flex gap-3">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)"
+                        @{
+                            var baseUrl = Context.Request.Host.Host.Contains("localhost")
+                                ? $"{Context.Request.Scheme}://{Context.Request.Host}"
+                                : "https://hoidonghuongvanloc.com";
+                            var shareUrl = $"{baseUrl}{Context.Request.Path}";
+                        }
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=@shareUrl"
                             target="_blank"
                             class="w-10 h-10 rounded-full bg-primary/5 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all"><i
                                 class="bi bi-facebook"></i></a>
-                        <a href="https://zalo.me/share?url=@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)"
+                        <a href="https://zalo.me/share?url=@shareUrl"
                             target="_blank"
                             class="w-10 h-10 rounded-full bg-accent/5 text-accent flex items-center justify-center hover:bg-accent hover:text-white transition-all"><i
                                 class="bi bi-chat-dots"></i></a>
