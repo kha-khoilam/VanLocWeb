@@ -31,20 +31,7 @@ namespace VanLocWeb.Services
                 });
             }
 
-            if (!_context.NewsItems.Any())
-            {
-                _context.NewsItems.AddRange(new List<NewsItem> {
-                    new NewsItem {
-                        Title = "Khánh thành Công trình biểu tượng 'Cổng làng Vạn Lộc' năm 2025",
-                        Summary = "Một cột mốc quan trọng ghi dấu tình cảm quê hương của những người con xa xứ vừa chính thức khánh thành trong niềm hân hoan của bà con.",
-                        Content = "Sáng ngày 05/02/2025, Đảng ủy - HĐND - UBND xã Vạn Lộc phối hợp cùng Hội đồng hương tại TP.HCM đã tổ chức lễ khánh thành công trình Cổng làng Vạn Lộc. <br/><br/>Công trình có tổng kinh phí hơn 1,2 tỷ đồng, được đóng góp hoàn toàn bởi các mạnh thường quân và bà con đang sinh sống xa quê.",
-                        Category = "Tin quê hương",
-                        ImageUrl = "https://images.unsplash.com/photo-1599708603360-15330a587123?w=1000&q=80",
-                        PublishDate = DateTime.UtcNow.AddDays(-1),
-                        Visibility = AccessLevel.Public
-                    }
-                });
-            }
+            // Sample data removed - admins can create their own news items via admin panel
 
             if (!_context.SiteStats.Any())
             {
