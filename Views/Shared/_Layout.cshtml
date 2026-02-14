@@ -56,9 +56,9 @@
         <nav class="navbar fixed-top py-4 backdrop-blur-md bg-white/80 border-b border-secondary/10">
             <div class="container flex justify-between items-center">
                 <!-- Brand -->
-                <a class="navbar-brand font-display font-bold text-2xl text-primary flex items-center no-underline"
+                <a class="navbar-brand font-display font-bold text-base md:text-xl lg:text-2xl text-primary flex items-center no-underline"
                     asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="bi bi-geo-fill me-3 text-accent text-3xl"></i>
+                    <i class="bi bi-geo-fill me-2 md:me-3 text-xl md:text-2xl lg:text-3xl text-accent"></i>
                     <span>HỘI ĐỒNG HƯƠNG <span class="text-accent">VẠN LỘC</span></span>
                 </a>
 
@@ -91,7 +91,7 @@
                 </div>
 
                 <!-- Hamburger Button -->
-                <button class="hamburger-btn focus:outline-none" type="button" data-bs-toggle="offcanvas"
+                <button class="hamburger-btn focus:outline-none lg:hidden" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#navDrawer" aria-controls="navDrawer">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
