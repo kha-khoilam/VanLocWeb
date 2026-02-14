@@ -192,19 +192,31 @@ namespace VanLocWeb.Services
             return null;
         }
 
-        public void IncrementVisit()
+        public void AddSiteVisit()
         {
             try
             {
-                var stats = GetStats();
-                if (stats.Id == 0) // New stats
+                var stats = _context.SiteStats.FirstOrDefault();
+                if (stats == null)
                 {
+                    // Initialize if not exists
+                    stats = new SiteStats { TotalVisits = 0, DailyVisits = new Dictionary<string, int>() };
                     _context.SiteStats.Add(stats);
+                    _context.SaveChanges(); // Save first to get ID/Key if needed, though here Key is TotalVisits which is weird.
+                    // Re-fetch or just use it.
                 }
+
                 stats.TotalVisits++;
-                string today = DateTime.Now.ToString("yyyy-MM-dd");
-                if (stats.DailyVisits.ContainsKey(today)) stats.DailyVisits[today]++;
-                else stats.DailyVisits[today] = 1;
+                var today = DateTime.UtcNow.ToString("yyyy-MM-dd"); // Use UTC date
+
+                if (stats.DailyVisits.ContainsKey(today))
+                {
+                    stats.DailyVisits[today]++;
+                }
+                else
+                {
+                    stats.DailyVisits[today] = 1;
+                }
 
                 _context.SaveChanges();
             }
